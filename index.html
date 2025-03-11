@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game & App Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* New Background */
+        body {
+            background: radial-gradient(circle at center, #1A1A3D, #2A4066, #3D5A80);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Enhanced Button Hover */
+        .hover-animation {
+            transition: all 0.4s ease;
+        }
+        .hover-animation:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Form Styling */
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            width: 100%;
+            max-width: 320px;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Welcome Section -->
+    <section class="flex justify-center items-center min-h-screen flex-col text-center p-8">
+        <h1 class="text-5xl font-bold mb-6 animate__animated animate__bounceIn">Welcome to Game & App Haven</h1>
+        <p class="text-xl mb-8 animate__animated animate__slideInUp animate__delay-1s">Your one-stop hub for premium games and apps!</p>
+        <a href="#store" class="px-8 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 hover-animation text-lg animate__animated animate__pulse animate__infinite">Explore Now</a>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store" class="flex justify-center items-center min-h-screen flex-col text-center p-8">
+        <h1 class="text-4xl font-bold mb-6 animate__animated animate__fadeInDown">Games & Apps Collection</h1>
+        <p class="text-xl mb-8 animate__animated animate__slideInUp animate__delay-1s">Unlock exclusive games and apps by joining now!</p>
+        <a href="https://t.me/modxofficial21" target="_blank" class="px-8 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 hover-animation text-lg animate__animated animate__pulse animate__infinite">Join Now</a>
+    </section>
+
+    <!-- Sign In / Sign Up Section -->
+    <section id="login-signup" class="flex justify-center items-center min-h-screen flex-col text-center p-8">
+        <h1 class="text-4xl font-bold mb-6 animate__animated animate__bounceIn">Get Started</h1>
+        <p class="text-xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">Sign in or create an account to explore!</p>
+
+        <!-- Sign In Form -->
+        <div class="mb-8 w-full max-w-md">
+            <h2 class="text-2xl font-semibold mb-4 animate__animated animate__fadeIn">Sign In</h2>
+            <form class="space-y-4">
+                <input type="email" placeholder="Email" class="form-input" required>
+                <input type="password" placeholder="Password" class="form-input" required>
+                <button type="submit" class="px-6 py-3 bg-green-600 rounded-lg hover:bg-green-700 hover-animation w-full animate__animated animate__pulse">Sign In</button>
+            </form>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="mb-8 w-full max-w-md">
+            <h2 class="text-2xl font-semibold mb-4 animate__animated animate__fadeIn">Sign Up</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Username" class="form-input" required>
+                <input type="email" placeholder="Email" class="form-input" required>
+                <input type="password" placeholder="Password" class="form-input" required>
+                <button type="submit" class="px-6 py-3 bg-yellow-600 rounded-lg hover:bg-yellow-700 hover-animation w-full animate__animated animate__pulse">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Google Sign-In -->
+        <div class="mt-4 animate__animated animate__fadeInUp animate__delay-1s">
+            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleCredentialResponse"></div>
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+
+        <script>
+            function handleCredentialResponse(response) {
+                console.log("Encoded JWT ID token: " + response.credential);
+                // Add your authentication logic here
+            }
+        </script>
+    </section>
+
+</body>
+</html>
