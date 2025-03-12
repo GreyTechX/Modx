@@ -3,109 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game & App Store</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Xmod - Enchanted Modding Hub</title>
     <style>
-        /* New Background */
         body {
-            background: radial-gradient(circle at center, #1A1A3D, #2A4066, #3D5A80);
-            background-size: 200% 200%;
-            animation: gradientShift 10s ease infinite;
-            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Remove scrolling */
+            background: radial-gradient(circle at center, #0d1b2a, #1b263b, #415a77, #778da9);
+            position: relative;
         }
 
-        /* Enhanced Button Hover */
-        .hover-animation {
-            transition: all 0.4s ease;
-        }
-        .hover-animation:hover {
-            transform: scale(1.1) rotate(2deg);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Form Styling */
-        .form-input {
-            background-color: rgba(255, 255, 255, 0.15);
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            color: white;
+        /* Cosmic Starfield Background */
+        .starfield {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 320px;
-            transition: all 0.3s ease;
-        }
-        .form-input:focus {
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: scale(1.02);
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.5)"/></svg>');
+            animation: starTwinkle 15s infinite linear;
+            pointer-events: none;
         }
 
-        /* Gradient Animation */
-        @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+        @keyframes starTwinkle {
+            0% { transform: translateY(0) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-50vh) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0.5; }
+        }
+
+        /* Section Styling */
+        .section {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 1s ease, opacity 0.5s ease;
+        }
+
+        .section.hidden {
+            transform: translateY(100vh);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .section.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* First Section Text Animation */
+        .x-text, .mod-text {
+            color: #fff;
+            font-size: 6rem;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+
+        .x-text {
+            left: -50%;
+            animation: slideInX 1.5s ease-out forwards;
+        }
+
+        .mod-text {
+            right: -50%;
+            animation: slideInMod 1.5s ease-out forwards;
+        }
+
+        .combined-text {
+            color: #fff;
+            font-size: 6rem;
+            text-shadow: 0 0 20px rgba(0, 221, 235, 0.8), 0 0 40px rgba(255, 0, 204, 0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .combined-text.show {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .premium-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #00ddeb, #ff00cc, #ffcc00);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            box-shadow: 0 0 20px rgba(0, 221, 235, 0.7), 0 0 30px rgba(255, 0, 204, 0.5);
+            transition: all 0.3s ease;
+            opacity: 0;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+
+        .premium-btn:hover::after {
+            left: 150%;
+        }
+
+        .premium-btn.show {
+            opacity: 1;
+            animation: glowPulse 1.5s ease infinite alternate;
+        }
+
+        .premium-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 221, 235, 1), 0 0 60px rgba(255, 0, 204, 0.8);
+        }
+
+        /* Second Section */
+        .second-section .description {
+            color: #e0e0e0;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+
+        /* Animations */
+        @keyframes slideInX {
+            to { left: 42%; }
+        }
+
+        @keyframes slideInMod {
+            to { right: 32%; }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 20px rgba(0, 221, 235, 0.7), 0 0 30px rgba(255, 0, 204, 0.5); }
+            100% { box-shadow: 0 0 40px rgba(0, 221, 235, 1), 0 0 60px rgba(255, 0, 204, 0.8); }
+        }
+
+        /* Diffraction Transition Effect */
+        .diffraction {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 221, 235, 0.5), rgba(255, 0, 204, 0.5));
+            opacity: 0;
+            animation: diffract 1s ease forwards;
+            pointer-events: none;
+        }
+
+        @keyframes diffract {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 0.8; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(2); }
         }
     </style>
 </head>
-<body class="text-white">
+<body>
+    <div class="starfield"></div>
 
-    <!-- Welcome Section -->
-    <section class="flex justify-center items-center min-h-screen flex-col text-center p-8">
-        <h1 class="text-5xl font-bold mb-6 animate__animated animate__bounceIn">Welcome to Game & App Haven</h1>
-        <p class="text-xl mb-8 animate__animated animate__slideInUp animate__delay-1s">Your one-stop hub for premium games and apps!</p>
-        <a href="#store" class="px-8 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 hover-animation text-lg animate__animated animate__pulse animate__infinite">Explore Now</a>
-    </section>
+    <!-- First Section -->
+    <div class="section first-section active" id="first">
+        <h1 class="x-text">X</h1>
+        <h1 class="mod-text">Mod</h1>
+        <h1 class="combined-text" id="combinedText">Mod X</h1>
+        <a href="#" class="premium-btn" id="nextBtn">Enter</a>
+    </div>
 
-    <!-- Store Section -->
-    <section id="store" class="flex justify-center items-center min-h-screen flex-col text-center p-8">
-        <h1 class="text-4xl font-bold mb-6 animate__animated animate__fadeInDown">Games & Apps Collection</h1>
-        <p class="text-xl mb-8 animate__animated animate__slideInUp animate__delay-1s">Unlock exclusive games and apps by joining now!</p>
-        <a href="https://t.me/modxofficial21" target="_blank" class="px-8 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 hover-animation text-lg animate__animated animate__pulse animate__infinite">Join Now</a>
-    </section>
+    <!-- Second Section -->
+    <div class="section second-section hidden" id="second">
+        <h1 class="combined-text show">Mod X</h1>
+        <p class="description">We provide best and premium mods</p>
+        <a href="https://t.me/modxofficial21" target="_blank" class="premium-btn show">Join ModX – The Ultimate Modding Hub</a>
+    </div>
 
-    <!-- Sign In / Sign Up Section -->
-    <section id="login-signup" class="flex justify-center items-center min-h-screen flex-col text-center p-8">
-        <h1 class="text-4xl font-bold mb-6 animate__animated animate__bounceIn">Get Started</h1>
-        <p class="text-xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">Sign in or create an account to explore!</p>
+    <div class="diffraction" id="diffraction"></div>
 
-        <!-- Sign In Form -->
-        <div class="mb-8 w-full max-w-md">
-            <h2 class="text-2xl font-semibold mb-4 animate__animated animate__fadeIn">Sign In</h2>
-            <form class="space-y-4">
-                <input type="email" placeholder="Email" class="form-input" required>
-                <input type="password" placeholder="Password" class="form-input" required>
-                <button type="submit" class="px-6 py-3 bg-green-600 rounded-lg hover:bg-green-700 hover-animation w-full animate__animated animate__pulse">Sign In</button>
-            </form>
-        </div>
+    <script>
+        window.onload = () => {
+            const xText = document.querySelector('.x-text');
+            const modText = document.querySelector('.mod-text');
+            const combinedText = document.getElementById('combinedText');
+            const nextBtn = document.getElementById('nextBtn');
+            const firstSection = document.getElementById('first');
+            const secondSection = document.getElementById('second');
+            const diffraction = document.getElementById('diffraction');
 
-        <!-- Sign Up Form -->
-        <div class="mb-8 w-full max-w-md">
-            <h2 class="text-2xl font-semibold mb-4 animate__animated animate__fadeIn">Sign Up</h2>
-            <form class="space-y-4">
-                <input type="text" placeholder="Username" class="form-input" required>
-                <input type="email" placeholder="Email" class="form-input" required>
-                <input type="password" placeholder="Password" class="form-input" required>
-                <button type="submit" class="px-6 py-3 bg-yellow-600 rounded-lg hover:bg-yellow-700 hover-animation w-full animate__animated animate__pulse">Sign Up</button>
-            </form>
-        </div>
+            // Combine text and show button
+            setTimeout(() => {
+                xText.style.opacity = '0';
+                modText.style.opacity = '0';
+                combinedText.classList.add('show');
+                setTimeout(() => {
+                    nextBtn.classList.add('show');
+                }, 500);
+            }, 1500);
 
-        <!-- Google Sign-In -->
-        <div class="mt-4 animate__animated animate__fadeInUp animate__delay-1s">
-            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleCredentialResponse"></div>
-            <div class="g_id_signin" data-type="standard"></div>
-        </div>
-
-        <script>
-            function handleCredentialResponse(response) {
-                console.log("Encoded JWT ID token: " + response.credential);
-                // Add your authentication logic here
-            }
-        </script>
-    </section>
-
+            // Handle page transition
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                diffraction.style.display = 'block'; // Trigger diffraction effect
+                setTimeout(() => {
+                    firstSection.classList.remove('active');
+                    firstSection.classList.add('hidden');
+                    secondSection.classList.remove('hidden');
+                    secondSection.classList.add('active');
+                    diffraction.style.display = 'none'; // Hide effect after transition
+                }, 1000); // Matches diffraction animation duration
+            });
+        };
+    </script>
 </body>
 </html>
